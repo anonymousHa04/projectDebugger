@@ -14,6 +14,11 @@
     window.postMessage({ type: "REACT_FIBER_TREE", fiberTree }, origin);
   };
 
+  /**
+   * Recursively serializes a React fiber node and its subtree into a plain object.
+   * @param {Object} fiber - The React fiber node to traverse.
+   * @return {Object|null} An object representing the fiber node and its children, or null if the input is falsy.
+   */
   function traverseFiber(fiber) {
     if (!fiber) return null;
 
