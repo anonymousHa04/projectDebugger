@@ -14,8 +14,8 @@
         window.postMessage({ type: "FIBER_DATA", fiberTree }, origin);
     };
 
-    function traverseFiber(fiber) {
-        if (!fiber) return null;
+  function traverseFiber(fiber) {
+    if (!fiber) return null;
 
         const data = {
             type: fiber.type?.name || fiber.type,
