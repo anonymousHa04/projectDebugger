@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener((message) => {
   if (message.type === "FIBER_DATA") {
-    const fiberTree = message.payload;
+    const fiberTree = message.fiberTree;
     document.getElementById("output").textContent = JSON.stringify(fiberTree, null, 2);
   }
 });
