@@ -1,36 +1,22 @@
-(function () {
-  const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-
-//   console.log(hook)
-  if (!hook) {
-    console.warn("React DevTools not found.");
-    return;
-  }
-
-  hook.onCommitFiberRoot = function (id, root, priorityLevel) {
-    const current = root.current;
-
-    const fiberTree = traverseFiber(current);
-    window.postMessage({ type: "REACT_FIBER_TREE", fiberTree }, "*");
+function injectScript(filePath) {
+  const script = document.createElement("script");
+  script.src = chrome.runtime.getURL(filePath);
+  script.onload = function () {
+    this.remove();
   };
-
-  function traverseFiber(fiber) {
-    if (!fiber) return null;
-
-    const data = {
-      type: fiber.type?.name || fiber.type,
-      key: fiber.key,
-      props: fiber.memoizedProps,
-      state: fiber.memoizedState,
-      children: []
-    };
-
-    let child = fiber.child;
-    while (child) {
-      data.children.push(traverseFiber(child));
-      child = child.sibling;
-    }
-
-    return data;
+  
+  const target = document.head || document.documentElement;
+  if (target) {
+    target.appendChild(script);
+  } else {
+    // fallback or delay append until DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+      const fallbackTarget = document.head || document.documentElement;
+      if (fallbackTarget) {
+        fallbackTarget.appendChild(script);
+      }
+    });
   }
-})();
+}
+
+injectScript("injected.js");
