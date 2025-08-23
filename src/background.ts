@@ -1,7 +1,5 @@
-import type { ExtensionMessage } from '../types/extension-messages';
-
 chrome.runtime.onMessage.addListener((
-  message: ExtensionMessage, 
+  message: any, 
   sender: chrome.runtime.MessageSender, 
   sendResponse: (response?: any) => void
 ): boolean => {

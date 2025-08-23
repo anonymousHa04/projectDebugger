@@ -1,6 +1,4 @@
-import type { ExtensionMessage } from '../types/extension-messages';
-
-chrome.runtime.onMessage.addListener((message: ExtensionMessage): void => {
+chrome.runtime.onMessage.addListener((message: any): void => {
   if (message.type === "FIBER_DATA") {
     const fiberTree = message.fiberTree;
     const outputElement = document.getElementById("output");
@@ -15,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (): void => {
   if (analyzeBtn) {
     analyzeBtn.addEventListener("click", (): void => {
       // In current setup, fiber data comes via background automatically
-      // console.log("buttonClicked")
+      console.log("buttonClicked")
     });
   }
 });

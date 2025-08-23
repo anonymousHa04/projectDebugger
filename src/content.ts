@@ -28,4 +28,4 @@ function injectScript(filePath: string): void {
   }
 }
 
-injectScript("injected.js");
+injectScript("dist/injected.js");
