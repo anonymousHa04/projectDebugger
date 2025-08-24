@@ -8,10 +8,19 @@
  * @param filePath - The path to the script file within the Chrome extension.
  */
 function injectScript(filePath: string): void {
+  console.log("🚀 Injecting React Insight script into page:", filePath);
   const script = document.createElement("script");
   script.src = chrome.runtime.getURL(filePath);
+  console.log("📍 Script URL:", script.src);
+  
   script.onload = function (): void {
+    console.log("✅ React Insight script loaded successfully");
     script.remove();
+  };
+  
+  script.onerror = function (error): void {
+    console.error("❌ Failed to load React Insight script:", error);
+    console.error("❌ Script src was:", script.src);
   };
   
   const target = document.head || document.documentElement;
@@ -28,4 +37,27 @@ function injectScript(filePath: string): void {
   }
 }
 
-injectScript("injected.js");
+// Listen for messages from the injected script
+window.addEventListener("message", (event: MessageEvent): void => {
+  // Only process messages from the same origin and with our specific type
+  if (event.source !== window || !event.data || event.data.type !== "FIBER_DATA") {
+    return;
+  }
+  
+  console.log("📨 Content script received FIBER_DATA message");
+  
+  try {
+    const message = {
+      type: "FIBER_DATA",
+      payload: event.data.fiberTree
+    };
+    
+    chrome.runtime.sendMessage(message);
+    console.log("✅ Fiber data forwarded to background script");
+  } catch (error) {
+    console.error("❌ Failed to send message to background:", error);
+  }
+});
+
+console.log("🎯 Content script loaded, injecting React Insight...");
+injectScript("dist/injected.js");
