@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test React App for Extension</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+        // Simple React component for testing
+        const { useState, useEffect } = React;
+        
+        function TestComponent() {
+            const [count, setCount] = useState(0);
+            const [message, setMessage] = useState('Hello World');
+            
+            useEffect(() => {
+                console.log('TestComponent mounted');
+            }, []);
+            
+            return React.createElement('div', {
+                style: { padding: '20px', fontFamily: 'Arial' }
+            }, [
+                React.createElement('h1', { key: 'title' }, 'React Extension Test'),
+                React.createElement('p', { key: 'message' }, `Message: ${message}`),
+                React.createElement('p', { key: 'count' }, `Count: ${count}`),
+                React.createElement('button', {
+                    key: 'increment',
+                    onClick: () => setCount(count + 1)
+                }, 'Increment'),
+                React.createElement('button', {
+                    key: 'change-message',
+                    onClick: () => setMessage(message === 'Hello World' ? 'Changed!' : 'Hello World'),
+                    style: { marginLeft: '10px' }
+                }, 'Change Message'),
+                React.createElement(ChildComponent, { key: 'child', parentCount: count })
+            ]);
+        }
+        
+        function ChildComponent({ parentCount }) {
+            const [childState, setChildState] = useState('child data');
+            
+            return React.createElement('div', {
+                style: { 
+                    marginTop: '20px', 
+                    padding: '10px', 
+                    border: '1px solid #ccc',
+                    backgroundColor: '#f9f9f9'
+                }
+            }, [
+                React.createElement('h3', { key: 'child-title' }, 'Child Component'),
+                React.createElement('p', { key: 'child-info' }, `Parent count: ${parentCount}`),
+                React.createElement('p', { key: 'child-state' }, `Child state: ${childState}`),
+                React.createElement('button', {
+                    key: 'child-button',
+                    onClick: () => setChildState(childState === 'child data' ? 'updated!' : 'child data')
+                }, 'Update Child State')
+            ]);
+        }
+        
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(TestComponent));
+        
+        console.log('React app rendered. Extension should detect fiber tree changes.');
+    </script>
+</body>
+</html>

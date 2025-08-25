@@ -32,7 +32,8 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "dist/injected.js"
+                "dist/injected.js",
+                "dist/injected-clean.js"
             ],
             "matches": [
                 "<all_urls>"

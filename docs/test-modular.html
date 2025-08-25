@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Insight - Modular Test</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+        const { useState, useEffect } = React;
+        
+        // Test component with state
+        function TestComponent() {
+            const [count, setCount] = useState(0);
+            const [message, setMessage] = useState("Hello Modular React Insight!");
+            
+            useEffect(() => {
+                console.log("TestComponent mounted");
+            }, []);
+            
+            return React.createElement('div', {
+                style: { padding: '20px', fontFamily: 'Arial, sans-serif' }
+            }, [
+                React.createElement('h1', { key: 'title' }, 'React Insight Modular Test'),
+                React.createElement('p', { key: 'message' }, message),
+                React.createElement('p', { key: 'count' }, `Count: ${count}`),
+                React.createElement('button', {
+                    key: 'button',
+                    onClick: () => setCount(count + 1),
+                    style: { padding: '10px', margin: '5px' }
+                }, 'Increment'),
+                React.createElement('button', {
+                    key: 'button2',
+                    onClick: () => setMessage(`Updated at ${new Date().toLocaleTimeString()}`),
+                    style: { padding: '10px', margin: '5px' }
+                }, 'Update Message')
+            ]);
+        }
+        
+        // Nested component structure
+        function NestedComponent({ level }) {
+            if (level <= 0) {
+                return React.createElement('span', null, 'Leaf node');
+            }
+            
+            return React.createElement('div', {
+                style: { marginLeft: '20px', border: '1px solid #ccc', padding: '5px' }
+            }, [
+                React.createElement('p', { key: 'level' }, `Level ${level}`),
+                React.createElement(NestedComponent, { key: 'nested', level: level - 1 })
+            ]);
+        }
+        
+        // Main app component
+        function App() {
+            return React.createElement('div', null, [
+                React.createElement(TestComponent, { key: 'test' }),
+                React.createElement('hr', { key: 'hr' }),
+                React.createElement('h2', { key: 'nested-title' }, 'Nested Components:'),
+                React.createElement(NestedComponent, { key: 'nested', level: 3 })
+            ]);
+        }
+        
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+        
+        console.log("🧪 Modular test app rendered - React Insight should detect this!");
+    </script>
+</body>
+</html>

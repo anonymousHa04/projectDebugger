@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple React Test</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+        // Very simple React component for testing
+        function SimpleComponent() {
+            return React.createElement('div', {
+                style: { padding: '20px', fontFamily: 'Arial' }
+            }, [
+                React.createElement('h1', { key: 'title' }, 'Simple Test'),
+                React.createElement('p', { key: 'text' }, 'This is a minimal React app for testing the extension.')
+            ]);
+        }
+        
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(SimpleComponent));
+        
+        console.log('Simple React app rendered.');
+        
+        // Add some debugging info
+        setTimeout(() => {
+            console.log('React DevTools Hook:', window.__REACT_DEVTOOLS_GLOBAL_HOOK__);
+            if (window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+                console.log('Hook properties:', Object.keys(window.__REACT_DEVTOOLS_GLOBAL_HOOK__));
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

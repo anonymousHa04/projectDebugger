@@ -60,4 +60,4 @@ window.addEventListener("message", (event: MessageEvent): void => {
 });
 
 console.log("🎯 Content script loaded, injecting React Insight...");
-injectScript("dist/injected.js");
+injectScript("dist/injected-clean.js");

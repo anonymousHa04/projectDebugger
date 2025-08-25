@@ -30,7 +30,9 @@ React Insight AI is a Chrome DevTools extension that hooks into a webpage's Reac
 
 ## Build & Installation
 ```bash
-# No build process required
+# Build the TypeScript files
+npm run build
+
 # Installation:
 # 1. Visit chrome://extensions
 # 2. Enable Developer mode
@@ -74,3 +76,29 @@ React Insight AI is a Chrome DevTools extension that hooks into a webpage's Reac
 - Uses Chrome messaging API for communication between components
 - Leverages React DevTools hook to access Fiber tree
 - Traverses and serializes Fiber nodes recursively
+
+## 📚 Documentation
+
+For detailed technical documentation, architecture guides, and test files, see the **[docs/](./docs/)** folder:
+
+- **[Modular Structure Guide](./docs/MODULAR_STRUCTURE.md)** - Complete architecture overview
+- **[TypeScript Documentation](./docs/README-TypeScript.md)** - TypeScript setup and configuration
+- **[Test Files](./docs/)** - HTML test pages for development and debugging
+
+## 🏗️ Architecture
+
+The project now uses a **modular architecture** with clean separation of concerns:
+
+```
+src/
+├── helpers/              # Modular helper functions
+│   ├── serialization.ts  # Safe object serialization
+│   ├── fiber-utils.ts    # React Fiber utilities
+│   ├── fiber-traversal.ts # Fiber tree traversal
+│   ├── messaging.ts      # Communication utilities
+│   └── throttling.ts     # Performance throttling
+├── injected-clean.ts     # Main clean organized script
+├── content.ts           # Content script
+├── background.ts        # Background script
+└── popup.ts            # Popup script
+```
